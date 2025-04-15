@@ -1,8 +1,26 @@
-pub mod cube;
-pub mod player;
+use std::fmt::Debug;
 
-use crate::game_object::GameObject;
+#[derive(Clone, Copy)]
+enum Entity {
+    Player,
+    Egg,
+    Snake,
+    // TODO: the other enemies, NPCs and
+}
 
-trait EntityObject: GameObject {
-    fn controller(&self, direction: char);
+impl Entity {
+    pub fn get_sprite(self) -> char {
+        match self {
+            Entity::Player => '@',
+            Entity::Egg => 'o',
+            Entity::Snake => '-',
+        }
+    }
+}
+
+impl Debug for Entity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let sprite = self.get_sprite();
+        write!(f, "{sprite}")
+    }
 }

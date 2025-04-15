@@ -1,28 +1,40 @@
-pub mod floor;
-pub mod goal;
-pub mod hole;
-pub mod wall;
+pub mod test;
 
-use crate::game_object::GameObject;
-use floor::Floor;
-use goal::Goal;
-use hole::Hole;
-use wall::Wall;
+use std::fmt::Debug;
 
-pub enum Physics {
-    Static,
-    Walkable,
-}
-
-pub trait TileObject: GameObject {
-    const PHYSICS: Physics;
-}
-
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Tile {
-    Floor(Floor),
-    Goal(Goal),
-    Hole(Hole),
-    Wall(Wall),
-    Default,
+    Floor,
+    Wall,
+    Hole,
+    Exit,
+    //TODO : Glass, Summonning, Traps, Smiting
+}
+
+impl Tile {
+    fn get_sprite(self) -> char {
+        match self {
+            Tile::Floor => '■',
+            Tile::Wall => '□',
+            Tile::Hole => ' ',
+            Tile::Exit => 'E',
+        }
+    }
+
+    pub fn from_char(c: char) -> Self {
+        match c {
+            '■' => Tile::Floor,
+            '□' => Tile::Wall,
+            ' ' => Tile::Hole,
+            'E' => Tile::Exit,
+            _ => Tile::Floor,
+        }
+    }
+}
+
+impl Debug for Tile {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let sprite = self.get_sprite();
+        write!(f, "{sprite}")
+    }
 }
