@@ -8,11 +8,11 @@ pub enum Tile {
     Wall,
     Hole,
     Exit,
-    //TODO : Glass, Summonning, Traps, Smiting
+    //TODO : Glass, Summonning, Traps, Smiting, Chests
 }
 
 impl Tile {
-    fn get_sprite(self) -> char {
+    fn sprite(self) -> char {
         match self {
             Tile::Floor => '■',
             Tile::Wall => '□',
@@ -34,7 +34,7 @@ impl Tile {
 
 impl Debug for Tile {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let sprite = self.get_sprite();
+        let sprite = self.sprite();
         write!(f, "{sprite}")
     }
 }
